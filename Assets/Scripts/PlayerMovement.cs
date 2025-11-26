@@ -12,11 +12,13 @@ public class PlayerMovement : MonoBehaviour {
     public int maxJumps = 2;
 
     private Rigidbody2D rb;
+    private Vector2 initialPosition;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         numJumps = maxJumps;
+        initialPosition = transform.position;
     }
 
     void Update()
@@ -57,6 +59,12 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    void Reset()
+    {
+        transform.position = initialPosition;
+        rb.linearVelocity = Vector2.zero;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -67,6 +75,11 @@ public class PlayerMovement : MonoBehaviour {
         if (collision.gameObject.CompareTag("Missile"))
         {
             Debug.Log("Player hit by missile!");
+        }
+
+        if(collision.gameObject.tag == "Destroy")
+        {
+            Reset();
         }
     }
 }
