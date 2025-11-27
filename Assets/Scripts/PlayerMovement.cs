@@ -6,8 +6,13 @@ public class PlayerMovement : MonoBehaviour {
     public float jumpForce;
 
     private float horizontalInput;
+    private bool isGrounded;
     public bool jump;
 
+    public float gravityPlane;
+    public bool plane;
+
+    public float gravityNormal;
     public int numJumps;
     public int maxJumps = 2;
 
@@ -25,12 +30,14 @@ public class PlayerMovement : MonoBehaviour {
     {
         horizontalInput = Input.GetAxis("Horizontal");
         jump = Input.GetKeyDown(KeyCode.Space) || jump;
+        plane = Input.GetKey(KeyCode.LeftShift);
     }
 
     void FixedUpdate()
     {
         HorizontalVelocity();
         Jump();
+        Planear();
     }
 
     void HorizontalVelocity()
@@ -59,6 +66,20 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    void Planear()
+    {
+        if (!isGrounded && plane){
+
+            if(rb.linearVelocityY > 0)
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
+        
+            rb.gravityScale = gravityPlane;
+        }
+        else{
+            rb.gravityScale = gravityNormal;
+        }
+    }
+
     void Reset()
     {
         transform.position = initialPosition;
@@ -70,6 +91,7 @@ public class PlayerMovement : MonoBehaviour {
         if (collision.gameObject.CompareTag("Ground"))
         {
             numJumps = maxJumps;
+            isGrounded = true;
         }
 
         if (collision.gameObject.CompareTag("Missile"))
@@ -80,6 +102,14 @@ public class PlayerMovement : MonoBehaviour {
         if(collision.gameObject.tag == "Destroy")
         {
             Reset();
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
         }
     }
 }
