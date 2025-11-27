@@ -2,12 +2,22 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private Transform controladorGolpe;
-    [SerializeField] private float radioGolpe;
-    [SerializeField] private float danoGolpe;
+    [SerializeField] private Transform golpeDerecha;
+    [SerializeField] private Transform golpeIzquierda;
+    [SerializeField] private float radioGolpe = 1f;
+    [SerializeField] private float danoGolpe = 1f;
+
+    public bool lookRight = true;
+    private string direction;
 
     private void Update()
     {
+
+        if(Input.GetAxisRaw("Horizontal") != 0)
+        {
+            lookRight = Input.GetAxisRaw("Horizontal") > 0;
+        }
+
         if(Input.GetButtonDown("Fire1"))
         {
             Golpe();
@@ -16,14 +26,25 @@ public class PlayerAttack : MonoBehaviour
 
     private void Golpe()
     {
-        Collider2D[] objetos = Physics2D.OverlapCircleAll(controladorGolpe.position, radioGolpe);
+        Transform punto = lookRight ? golpeDerecha : golpeIzquierda;
+
+        Collider2D[] objetos = Physics2D.OverlapCircleAll(punto.position, radioGolpe);
 
         foreach (Collider2D colisionador in objetos)
         {
+            if(lookRight == true)
+            {
+                direction = "right";
+            }
+            else
+            {
+                direction = "left";
+            }
+
             if (colisionador.CompareTag("Missile"))
             {
                 colisionador.transform.GetComponent<MissileMovement>().TocarDano(danoGolpe);
-                Debug.Log("Missile hit!");
+                Debug.Log("Missile hit in the " + direction + " direction!");
             }
         }   
     }
@@ -31,6 +52,15 @@ public class PlayerAttack : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(controladorGolpe.position, radioGolpe);
+        if(golpeDerecha != null)
+        {
+            Gizmos.DrawWireSphere(golpeDerecha.position, radioGolpe);
+        }
+
+        Gizmos.color = Color.blue;
+        if(golpeIzquierda != null)
+        {
+            Gizmos.DrawWireSphere(golpeIzquierda.position, radioGolpe);
+        }
     }
 }
