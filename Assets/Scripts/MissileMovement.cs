@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MissileMovement : MonoBehaviour
 {
-    public float speed = 2.5f;
+    public float speed;
     public float rotationSpeed = 100f;
 
     private Rigidbody2D rb;

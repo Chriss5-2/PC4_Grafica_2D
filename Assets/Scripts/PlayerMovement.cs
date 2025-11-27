@@ -1,5 +1,6 @@
-using System;
+
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
     public float speed;
@@ -19,6 +20,10 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D rb;
     private Vector2 initialPosition;
 
+    public int numVidas; // Serán 5 vidas
+
+    public bool isPaused = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -31,6 +36,21 @@ public class PlayerMovement : MonoBehaviour {
         horizontalInput = Input.GetAxis("Horizontal");
         jump = Input.GetKeyDown(KeyCode.Space) || jump;
         plane = Input.GetKey(KeyCode.LeftShift);
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            Reset();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+
+        if(numVidas <= 0)
+        {
+            StopGame();
+        }
     }
 
     void FixedUpdate()
@@ -66,6 +86,12 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    void StopGame()
+    {
+        Debug.Log("Game Over");
+        AudioListener.pause = true;
+        Time.timeScale = 0f;
+    }
     void Planear()
     {
         if (!isGrounded && plane){
@@ -82,9 +108,34 @@ public class PlayerMovement : MonoBehaviour {
 
     void Reset()
     {
-        transform.position = initialPosition;
-        rb.linearVelocity = Vector2.zero;
+        AudioListener.pause = false;
+        Time.timeScale = 1f;
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+        
     }
+
+    void Pause()
+    {
+        if (isPaused)
+        {
+            AudioListener.pause = false;
+            Time.timeScale = 1f;
+            isPaused = false;
+            Debug.Log("Juego reanudado");
+        }
+        else
+        {
+            if (numVidas > 0)
+            {
+                AudioListener.pause = true;
+                Time.timeScale = 0f;
+                isPaused = true;
+                Debug.Log("Juego pausado");
+            }
+        }
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -96,12 +147,14 @@ public class PlayerMovement : MonoBehaviour {
 
         if (collision.gameObject.CompareTag("Missile"))
         {
-            Debug.Log("Player hit by missile!");
+            //Debug.Log("Player hit by missile!");
+            numVidas--;
+            Debug.Log("Vidas restantes: " + numVidas);
         }
 
         if(collision.gameObject.tag == "Destroy")
         {
-            Reset();
+            StopGame();
         }
     }
 

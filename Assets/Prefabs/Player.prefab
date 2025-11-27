@@ -218,6 +218,8 @@ MonoBehaviour:
   gravityNormal: 3
   numJumps: 2
   maxJumps: 2
+  numVidas: 5
+  isPaused: 0
 --- !u!114 &8285073399687100844
 MonoBehaviour:
   m_ObjectHideFlags: 0
