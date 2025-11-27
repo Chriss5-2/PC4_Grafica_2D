@@ -48,10 +48,10 @@ public class Spawn : MonoBehaviour
         if(timerLemon <= 0f)
         {
             SpawnLemonCount++;
-            if(SpawnLemonCount % 2 == 0)
+            /*if(SpawnLemonCount % 2 == 0)
             {
                 timeLemon -= 5f;
-            }
+            }*/
             SpawnLemon();
             timerLemon = timeLemon;
         }

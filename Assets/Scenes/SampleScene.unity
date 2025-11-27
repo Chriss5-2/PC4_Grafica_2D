@@ -640,7 +640,7 @@ MonoBehaviour:
   lemonPrefab: {fileID: 761103530}
   player: {fileID: 1457131865}
   numEnemys: 0
-  timeWait: 2
+  timeWait: 5
   timeLemon: 10
   SpawnCount: 0
   SpawnLemonCount: 0
