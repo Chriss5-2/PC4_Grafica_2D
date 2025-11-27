@@ -1,10 +1,15 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
     public float speed;
     public float jumpForce;
+
+    public float climbSpeed; // 6f
+    public bool isOnLadder = false;
+    private float normalGravity;
 
     private float horizontalInput;
     private bool isGrounded;
@@ -29,6 +34,7 @@ public class PlayerMovement : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         numJumps = maxJumps;
         initialPosition = transform.position;
+        normalGravity = rb.gravityScale;
     }
 
     void Update()
@@ -36,6 +42,27 @@ public class PlayerMovement : MonoBehaviour {
         horizontalInput = Input.GetAxis("Horizontal");
         jump = Input.GetKeyDown(KeyCode.Space) || jump;
         plane = Input.GetKey(KeyCode.LeftShift);
+
+        if (isOnLadder)
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                rb.gravityScale = 0;
+                rb.linearVelocity = new Vector2(rb.linearVelocityX, climbSpeed);
+            }else if (Input.GetKey(KeyCode.S))
+            {
+                rb.gravityScale = 0;
+                rb.linearVelocity = new Vector2(rb.linearVelocityX, -climbSpeed);
+            }
+            else
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocityX, 0);
+            }
+        }
+        else
+        {
+            rb.gravityScale = normalGravity;
+        }
 
         if(Input.GetKeyDown(KeyCode.R))
         {
@@ -158,11 +185,28 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isOnLadder = true;
+        }
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+        }
+        
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isOnLadder = false;
         }
     }
 }

@@ -13,6 +13,14 @@ public class LemonMovement : MonoBehaviour
 
     void Update()
     {
-        rb.linearVelocity = new Vector2(-speed, 0);
+        rb.linearVelocity = new Vector2(-speed, rb.linearVelocityY);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Destroy"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

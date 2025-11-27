@@ -20,6 +20,7 @@ public class Spawn : MonoBehaviour
 
     private float currentSpeedMissile;
 
+    public float distanceRandomMissile;
     void Start()
     {
         timer = timeWait;
@@ -61,7 +62,17 @@ public class Spawn : MonoBehaviour
     {
         for (int i=0; i < cantidad; i++)
         {
-            Vector3 position = new Vector3(player.position.x + Random.Range(-11f, 11f), Random.Range(10f, 20f), 0);
+            float randomPosition = Random.Range(0f, 1f);
+            if (randomPosition < 0.5f)
+            {
+                distanceRandomMissile *= -1f;
+            }
+            else
+            {
+                float random = Random.Range(1.5f, 2f);
+                distanceRandomMissile *= random;
+            }
+            Vector3 position = new Vector3(player.position.x + distanceRandomMissile, Random.Range(20f, 40f), 0);
             GameObject newMosca = Instantiate(prefab, position, Quaternion.identity);
 
             MissileMovement m = newMosca.GetComponent<MissileMovement>();
@@ -80,8 +91,12 @@ public class Spawn : MonoBehaviour
 
     private void SpawnLemon()
     {
-        float dirX = player.position.x;
-        Vector3 position = new Vector3(dirX + 8f, -0.9f, 0);
+        // Spawn del limón a 10 unidades a la derecha del jugador
+        // float dirX = player.position.x;
+        // Vector3 position = new Vector3(dirX + 10f, -0.9f, 0);
+        
+        // Generando spawn en el punto (135, 23.1, 0)
+        Vector3 position = new Vector3(135f, 23.1f, 0);
         Instantiate(lemonPrefab, position, Quaternion.identity);
     }
 
