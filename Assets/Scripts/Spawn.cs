@@ -62,6 +62,7 @@ public class Spawn : MonoBehaviour
     {
         for (int i=0; i < cantidad; i++)
         {
+            float offsetCalculado = distanceRandomMissile;
             float randomPosition = Random.Range(0f, 1f);
             if (randomPosition < 0.5f)
             {
@@ -70,13 +71,16 @@ public class Spawn : MonoBehaviour
             else
             {
                 float random = Random.Range(1.5f, 2f);
-                distanceRandomMissile *= random;
+                offsetCalculado *= random;
             }
-            Vector3 position = new Vector3(player.position.x + distanceRandomMissile, Random.Range(20f, 40f), 0);
+            Vector3 position = new Vector3(player.position.x + offsetCalculado, Random.Range(20f, 40f), 0);
             GameObject newMosca = Instantiate(prefab, position, Quaternion.identity);
 
             MissileMovement m = newMosca.GetComponent<MissileMovement>();
-            m.speed = currentSpeedMissile;
+            if (m != null) 
+            {
+                m.speed = currentSpeedMissile;
+            }
         }
         
         //for (int i=0; i< cantidad; i++)
