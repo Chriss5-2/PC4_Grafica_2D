@@ -215,7 +215,7 @@ MonoBehaviour:
   climbSpeed: 3
   isOnLadder: 0
   jump: 0
-  gravityPlane: 0.1
+  gravityPlane: 0.005
   plane: 0
   gravityNormal: 3
   numJumps: 2

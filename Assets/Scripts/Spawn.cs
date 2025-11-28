@@ -70,10 +70,10 @@ public class Spawn : MonoBehaviour
             }
             else
             {
-                float random = Random.Range(1.5f, 2f);
-                offsetCalculado *= random;
+                // float random = Random.Range(1.5f, 2f);
+                offsetCalculado *= 1f;
             }
-            Vector3 position = new Vector3(player.position.x + offsetCalculado, Random.Range(20f, 40f), 0);
+            Vector3 position = new Vector3(player.position.x + offsetCalculado, player.position.y + Random.Range(10f, 20f), 0);
             GameObject newMosca = Instantiate(prefab, position, Quaternion.identity);
 
             MissileMovement m = newMosca.GetComponent<MissileMovement>();

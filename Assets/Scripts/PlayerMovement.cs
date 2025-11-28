@@ -85,6 +85,7 @@ public class PlayerMovement : MonoBehaviour {
         HorizontalVelocity();
         Jump();
         Planear();
+        Winner();
     }
 
     void HorizontalVelocity()
@@ -113,6 +114,15 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    void Winner()
+    {
+        if(transform.position.x >= 620f && transform.position.y < 5f)
+        {
+            Debug.Log("Has ganado!");
+            AudioListener.pause = true;
+            Time.timeScale = 0f;
+        }
+    }
     void StopGame()
     {
         Debug.Log("Game Over");
