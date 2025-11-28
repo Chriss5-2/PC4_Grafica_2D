@@ -135,7 +135,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c743ab2af54dcf44eb533b34f9a555dd, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -210,10 +210,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4be2ef09bc3f1348a33b149b89d4886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  jumpForce: 10
+  speed: 3.5
+  jumpForce: 12
+  climbSpeed: 3
+  isOnLadder: 0
   jump: 0
-  gravityPlane: 0.2
+  gravityPlane: 0.1
   plane: 0
   gravityNormal: 3
   numJumps: 2
@@ -234,7 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   golpeDerecha: {fileID: 2175214452417002699}
   golpeIzquierda: {fileID: 7641789356383814976}
-  radioGolpe: 2
+  radioGolpe: 5
   danoGolpe: 1
   lookRight: 1
 --- !u!1 &4374602932676704859

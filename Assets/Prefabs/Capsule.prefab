@@ -102,7 +102,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ce01836d71e9d5448ad0f27d89fc2462, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: ce01836d71e9d5448ad0f27d89fc2462, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -116,7 +116,7 @@ AudioSource:
   MinDistance: 5
   MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -124,19 +124,28 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.22311631
-      value: 0.9820404
-      inSlope: 0
-      outSlope: 0
+      time: 0.5
+      value: 1
+      inSlope: -2.0008
+      outSlope: -2.0008
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
+      time: 0.5097248
+      value: 0.33238474
+      inSlope: -2.4226568
+      outSlope: -2.4226568
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 1
-      value: 1.0057068
-      inSlope: -1.1764706
-      outSlope: -1.1764706
+      value: 0
+      inSlope: -0.5002
+      outSlope: -0.5002
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -217,7 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86bf731fe1bfd68488381b05d62f4dce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 4
   rotationSpeed: 300
 --- !u!60 &3749740419147692940
 PolygonCollider2D:
