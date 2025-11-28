@@ -1,4 +1,5 @@
 
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public float gravityPlane;
     public bool plane;
+    public bool isPlaneing = false;
 
     public float gravityNormal;
     public int numJumps;
@@ -29,6 +31,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool isPaused = false;
 
+    public Animator animator;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -40,8 +44,17 @@ public class PlayerMovement : MonoBehaviour {
     void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
+        if(Math.Abs(horizontalInput) < 0.05f)
+        {
+            animator.SetFloat("movement", 0f);
+        }
+        else
+        {
+            animator.SetFloat("movement", Math.Abs(horizontalInput));
+        }
         jump = Input.GetKeyDown(KeyCode.Space) || jump;
         plane = Input.GetKey(KeyCode.LeftShift);
+        
 
         if (isOnLadder)
         {
@@ -85,13 +98,21 @@ public class PlayerMovement : MonoBehaviour {
         HorizontalVelocity();
         Jump();
         Planear();
+        animator.SetBool("plane", isPlaneing);
         Winner();
     }
 
     void HorizontalVelocity()
     {
+        
         float velocity = speed * horizontalInput;
-        rb.linearVelocityX = velocity;
+        rb.linearVelocityX = velocity;    
+        if (horizontalInput > 0.05f) // mirando derecha
+            transform.localScale = new Vector3(1, 1, 1);
+        else if (horizontalInput < -0.05f) // mirando izquierda
+            transform.localScale = new Vector3(-1, 1, 1);
+        
+        //animator.SetFloat("movement", horizontalInput);
     }
 
     void Jump()
@@ -137,9 +158,11 @@ public class PlayerMovement : MonoBehaviour {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
         
             rb.gravityScale = gravityPlane;
+            isPlaneing = true;
         }
         else{
             rb.gravityScale = gravityNormal;
+            isPlaneing = false;
         }
     }
 
