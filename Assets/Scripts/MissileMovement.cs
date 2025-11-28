@@ -34,6 +34,14 @@ public class MissileMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            Debug.Log("Choca");
+        }
+    }
+
     public void TocarDano(float daño)
     {
         Destroy(gameObject);
