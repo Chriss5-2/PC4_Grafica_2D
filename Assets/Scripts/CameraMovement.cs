@@ -10,14 +10,14 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        if(player.transform.position.x > 397f && player.transform.position.x < 500f)
+        if(player.transform.position.x > 397f /*&& player.transform.position.x < 500f */&& player.transform.position.y > 4f)
         {
             cam.orthographicSize = zoomLejos;
         }
-        else if(player.transform.position.x >= 500f && player.transform.position.y < 4f)
-        {
-            cam.orthographicSize = zoomCerca;
-        }
+        //else if(player.transform.position.x >= 500f && player.transform.position.y < 4f)
+        //{
+        //    cam.orthographicSize = zoomCerca;
+        //}
         else
         {
             cam.orthographicSize = zoomCerca;

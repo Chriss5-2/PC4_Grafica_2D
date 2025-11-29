@@ -11,10 +11,14 @@ public class PlataformaCae : MonoBehaviour
     private Quaternion initialRotation;
     public int resetTime=2;
 
+    public AudioClip caerSound;
+    private AudioSource audioSource;
+
     void Start()
     {
         initialPosition = transform.position;
         initialRotation = transform.rotation;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -22,6 +26,10 @@ public class PlataformaCae : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             jugadorEncima = true;
+            if(caerSound != null)
+            {
+                audioSource.PlayOneShot(caerSound);
+            }
             Invoke("HacerCaer", timeToFall);
             //jugadorEncima=false;
             Invoke("ResetPlataform", resetTime);

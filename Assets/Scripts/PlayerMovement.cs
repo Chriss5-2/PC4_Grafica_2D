@@ -33,11 +33,20 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool muerto = false;
 
+    public bool isJumping = false;
+
     public Animator animator;
+
+    public AudioClip jumpSound;
+    public AudioClip runSound;
+    private AudioSource audioSource;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        audioSource = GetComponent<AudioSource>();
+
         numJumps = maxJumps;
         initialPosition = transform.position;
         normalGravity = rb.gravityScale;
@@ -56,7 +65,7 @@ public class PlayerMovement : MonoBehaviour {
         }*/
         jump = Input.GetKeyDown(KeyCode.Space) || jump;
         plane = Input.GetKey(KeyCode.LeftShift);
-        
+
 
         if (isOnLadder)
         {
@@ -135,8 +144,13 @@ public class PlayerMovement : MonoBehaviour {
         {
             if (jump && numJumps > 0)
             {
+                isJumping = true;
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                if(jumpSound !=null && audioSource != null)
+                {
+                    audioSource.PlayOneShot(jumpSound);
+                }
                 numJumps --;
                 
                 jump = false;
@@ -154,7 +168,7 @@ public class PlayerMovement : MonoBehaviour {
         if(transform.position.x >= 620f && transform.position.y < 5f)
         {
             Debug.Log("Has ganado!");
-            AudioListener.pause = true;
+            //AudioListener.pause = true;
             Time.timeScale = 0f;
         }
     }
@@ -163,7 +177,7 @@ public class PlayerMovement : MonoBehaviour {
         Debug.Log("Game Over");
         rb.linearVelocity = Vector2.zero;
         // muerto = true;
-        AudioListener.pause = true;
+        //AudioListener.pause = true;
         //Time.timeScale = 0f;
     }
     void Planear()

@@ -10,6 +10,14 @@ public class PlayerAttack : MonoBehaviour
     public bool lookRight = true;
     private string direction;
 
+    public AudioClip splashSound;
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void Update()
     {
 
@@ -47,7 +55,10 @@ public class PlayerAttack : MonoBehaviour
             
             if (!colisionador.CompareTag("Missile"))
                 continue;
-
+            if(splashSound != null)
+            {
+                audioSource.PlayOneShot(splashSound);
+            }
             Vector2 dirToEnemy = colisionador.transform.position - punto.position;
 
             Vector2 golpeDir = (dir == "right") ? Vector2.right : Vector2.left; 
