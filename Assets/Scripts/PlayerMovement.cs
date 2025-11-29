@@ -41,6 +41,10 @@ public class PlayerMovement : MonoBehaviour {
     public AudioClip runSound;
     private AudioSource audioSource;
 
+
+    private float highestPoint;
+    public float maxFallDistance = 10f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -50,6 +54,8 @@ public class PlayerMovement : MonoBehaviour {
         numJumps = maxJumps;
         initialPosition = transform.position;
         normalGravity = rb.gravityScale;
+
+        highestPoint = transform.position.y;
     }
 
     void Update()
@@ -66,6 +72,15 @@ public class PlayerMovement : MonoBehaviour {
         jump = Input.GetKeyDown(KeyCode.Space) || jump;
         plane = Input.GetKey(KeyCode.LeftShift);
 
+        if (!isGrounded && transform.position.y > highestPoint)
+        {
+            highestPoint = transform.position.y;
+        }
+
+        if (plane)
+        {
+            highestPoint = transform.position.y;
+        }
 
         if (isOnLadder)
         {
@@ -232,8 +247,20 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            float fallDistance = highestPoint - transform.position.y;
+
+            // Si la distancia es mayor a 10 y NO estamos muertos ya
+            if (fallDistance >= maxFallDistance && !muerto)
+            {
+                Debug.Log("Muerte por caída de " + fallDistance + " metros.");
+                numVidas = 0;
+                muerto = true;
+                StopGame();
+            }
             numJumps = maxJumps;
             isGrounded = true;
+
+            highestPoint = transform.position.y;
         }
 
         if (collision.gameObject.CompareTag("Missile"))

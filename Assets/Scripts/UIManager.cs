@@ -8,6 +8,10 @@ public class UIManager : MonoBehaviour
 {
     public GameObject player;
     public TextMeshProUGUI nivelDescomposicion;
+    public TextMeshProUGUI metrosFaltantes;
+
+    public float posicionMeta = 620f;
+    public float distanciaRestante;
     public float numVidas;
     public AudioClip GameOverSound;
     public AudioClip WinSound;
@@ -62,6 +66,14 @@ public class UIManager : MonoBehaviour
         }*/
         PlayerMovement pm = player.GetComponent<PlayerMovement>();
 
+        // Distancia restante con 2 decimales
+        distanciaRestante = posicionMeta-pm.transform.position.x;
+        if(distanciaRestante < 0f)
+        {
+            distanciaRestante = 0f;
+        }
+        metrosFaltantes.text = "Meta: " + (distanciaRestante).ToString("F2");
+
         if (pm.muerto)
         {
             // 1. SONIDO (SOLO UNA VEZ)
@@ -87,13 +99,11 @@ public class UIManager : MonoBehaviour
             float numDescomposicion = (numVidas - pm.numVidas) * 10;
             string descomposicion = (numDescomposicion).ToString();
             
-            // Solo mostramos el texto normal si NO ha ganado todavía
             if (!winSonado) 
             {
                 nivelDescomposicion.text = "Descomposición: " + descomposicion + "%";
             }
 
-            // LÓGICA DE GANAR
             if(player.transform.position.x >= 620f && player.transform.position.y < 5f)
             {
                 // 1. SONIDO (SOLO UNA VEZ)

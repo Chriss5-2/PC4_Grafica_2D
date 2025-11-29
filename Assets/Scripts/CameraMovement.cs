@@ -10,7 +10,7 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        if(player.transform.position.x > 397f /*&& player.transform.position.x < 500f */&& player.transform.position.y > 4f)
+        if(player.transform.position.x > 397f /*&& player.transform.position.x < 500f */&& player.transform.position.y > 5f)
         {
             cam.orthographicSize = zoomLejos;
         }
