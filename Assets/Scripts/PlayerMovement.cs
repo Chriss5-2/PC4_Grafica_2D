@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour {
     private bool isGrounded;
     public bool jump;
 
-    public float gravityPlane;
+    public float speedPlane;
     public bool plane;
     public bool isPlaneing = false;
 
@@ -155,11 +155,12 @@ public class PlayerMovement : MonoBehaviour {
     void Planear()
     {
         if (!isGrounded && plane){
-
-            if(rb.linearVelocityY > 0)
+            rb.gravityScale = 0;
+            rb.linearVelocityY = -speedPlane;
+            /*if(rb.linearVelocityY > 0)
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
         
-            rb.gravityScale = gravityPlane;
+            rb.gravityScale = gravityPlane;*/
             isPlaneing = true;
         }
         else{
