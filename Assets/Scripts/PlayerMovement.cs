@@ -31,6 +31,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool isPaused = false;
 
+    public bool muerto = false;
+
     public Animator animator;
 
     void Start()
@@ -89,18 +91,28 @@ public class PlayerMovement : MonoBehaviour {
 
         if(numVidas <= 0)
         {
+            muerto = true;
             StopGame();
         }
     }
 
     void FixedUpdate()
     {
-        HorizontalVelocity();
-        Jump();
-        Planear();
-        animator.SetBool("plane", isPlaneing);
-        Winner();
-        animator.SetBool("clambing", isOnLadder);
+        if (!muerto)
+        {
+            HorizontalVelocity();
+            Jump();
+            Planear();
+            animator.SetBool("plane", isPlaneing);
+            Winner();
+            animator.SetBool("clambing", isOnLadder);
+        }
+        else
+        {
+            rb.linearVelocity = Vector2.zero;
+            StopGame();
+        }
+        
     }
 
     void HorizontalVelocity()
@@ -149,8 +161,9 @@ public class PlayerMovement : MonoBehaviour {
     void StopGame()
     {
         Debug.Log("Game Over");
+        // muerto = true;
         AudioListener.pause = true;
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
     }
     void Planear()
     {
@@ -217,6 +230,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if(collision.gameObject.tag == "Destroy")
         {
+            muerto = true;
             StopGame();
         }
     }

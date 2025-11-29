@@ -10,7 +10,7 @@ public class FondoMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position = player.transform.position + new Vector3(0, 0, 1) - player.transform.position / 1000000f;
+        transform.position = player.transform.position + new Vector3(0, 0, 1) - player.transform.position / 10000000000f;
         
         if(cam.orthographicSize == zoomCerca)
         {
