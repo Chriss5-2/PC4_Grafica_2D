@@ -16,7 +16,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - Fondo
   - 
   - 
   - 
@@ -50,6 +50,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 471823939
+    locked: 0
+  - name: Fondo
+    uniqueID: 4289451175
     locked: 0
   m_RenderingLayers:
   - Default

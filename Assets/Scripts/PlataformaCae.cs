@@ -8,11 +8,13 @@ public class PlataformaCae : MonoBehaviour
     private bool jugadorEncima = false;
 
     private Vector3 initialPosition;
+    private Quaternion initialRotation;
     public int resetTime=2;
 
     void Start()
     {
         initialPosition = transform.position;
+        initialRotation = transform.rotation;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -21,6 +23,7 @@ public class PlataformaCae : MonoBehaviour
         {
             jugadorEncima = true;
             Invoke("HacerCaer", timeToFall);
+            //jugadorEncima=false;
             Invoke("ResetPlataform", resetTime);
         }
 
@@ -34,7 +37,12 @@ public class PlataformaCae : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;
+
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+
         transform.position = initialPosition;
+        transform.rotation = initialRotation;
         jugadorEncima = false;
     }
 

@@ -44,14 +44,14 @@ public class PlayerMovement : MonoBehaviour {
     void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
-        if(Math.Abs(horizontalInput) < 0.05f)
+        /*if(Math.Abs(horizontalInput) < 0.05f)
         {
             animator.SetFloat("movement", 0f);
         }
         else
         {
             animator.SetFloat("movement", Math.Abs(horizontalInput));
-        }
+        }*/
         jump = Input.GetKeyDown(KeyCode.Space) || jump;
         plane = Input.GetKey(KeyCode.LeftShift);
         
@@ -61,11 +61,11 @@ public class PlayerMovement : MonoBehaviour {
             if (Input.GetKey(KeyCode.W))
             {
                 rb.gravityScale = 0;
-                rb.linearVelocity = new Vector2(rb.linearVelocityX, climbSpeed);
+                rb.linearVelocity = new Vector2(rb.linearVelocityX/2, climbSpeed);
             }else if (Input.GetKey(KeyCode.S))
             {
                 rb.gravityScale = 0;
-                rb.linearVelocity = new Vector2(rb.linearVelocityX, -climbSpeed);
+                rb.linearVelocity = new Vector2(rb.linearVelocityX/2, -climbSpeed);
             }
             else
             {
@@ -100,12 +100,14 @@ public class PlayerMovement : MonoBehaviour {
         Planear();
         animator.SetBool("plane", isPlaneing);
         Winner();
+        animator.SetBool("clambing", isOnLadder);
     }
 
     void HorizontalVelocity()
     {
         
         float velocity = speed * horizontalInput;
+        animator.SetFloat("movement", Math.Abs(horizontalInput)*velocity);
         rb.linearVelocityX = velocity;    
         if (horizontalInput > 0.05f) // mirando derecha
             transform.localScale = new Vector3(1, 1, 1);
