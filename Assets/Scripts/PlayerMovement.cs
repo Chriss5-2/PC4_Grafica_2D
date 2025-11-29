@@ -161,6 +161,7 @@ public class PlayerMovement : MonoBehaviour {
     void StopGame()
     {
         Debug.Log("Game Over");
+        rb.linearVelocity = Vector2.zero;
         // muerto = true;
         AudioListener.pause = true;
         //Time.timeScale = 0f;
